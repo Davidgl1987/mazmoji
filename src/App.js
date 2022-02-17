@@ -1,25 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
+import Board from "./components/Board";
+import RandomElements from "./components/RandomElements";
+import Levels from "./components/Levels";
+import Game from "./components/Game";
 
-function App() {
+const App = () => {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+      <header>
+        <h3>Mazmoti</h3>
       </header>
+      <main>
+        <Game />
+      </main>
     </div>
   );
-}
+};
 
 export default App;

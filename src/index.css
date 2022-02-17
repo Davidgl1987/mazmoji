@@ -11,3 +11,40 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.App {
+  display: flex;
+  flex-direction: column;
+  max-width: 100vh;
+  height: 100vh;
+  align-items: center;
+  text-align: center;
+  margin: auto;
+  /* background-color: red; */
+}
+
+.board-container table {
+  border-collapse: collapse;
+  border: 1px solid;
+}
+.board-container table td {
+  width: 32px;
+  height: 32px;
+  padding: 0px;
+}
+
+.element {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid;
+}
+
+.element.yes {
+  background-color: rgba(0, 255, 0, 0.5);
+}
+.element.no {
+  background-color: rgba(255, 0, 0, 0.5);
+}
