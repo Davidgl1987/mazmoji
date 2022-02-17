@@ -6,7 +6,7 @@ const useDragDrop = () => {
     useContext(GameContext);
 
   const onDrag = (element) => {
-    setSelectedElement(...element);
+    setSelectedElement(element);
   };
 
   const onDrop = (x, y) => {
