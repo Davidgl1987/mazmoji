@@ -1,9 +1,14 @@
-import { createBoard } from "../gameHelper";
+import {
+  createBoard,
+  getOptions,
+  getTrasposeMatrix,
+  rotateMatrix,
+} from "../gameHelper";
 
-export const initialState = {
+export const initialGameState = {
   player: "",
   board: createBoard(),
-  randomOptions: null,
+  randomOptions: getOptions(),
   selectedOption: null,
   turns: 0,
   levels: {
@@ -17,16 +22,21 @@ export const initialState = {
 
 export const ACTIONS = {
   GENERATE_OPTIONS: "GENERATE_OPTIONS",
+  ROTATE_OPTION: "ROTATE_OPTION",
   SELECT_OPTION: "SELECT_OPTION",
   CHECK_OPTION_POSITION: "CHECK_OPTION_POSITION",
   SET_OPTION_ON_BOARD: "SET_OPTION_ON_BOARD",
   SET_OPTION_ON_LEVELS: "SET_OPTION_ON_LEVELS",
 };
 
-export const reducer = (state, action) => {
+export const GameReducer = (state, action) => {
   switch (action.type) {
     case ACTIONS.GENERATE_OPTIONS:
-      return { ...state };
+      return { ...state, randomOptions: getOptions() };
+    case ACTIONS.ROTATE_OPTION:
+      let randOpt = [...state.randomOptions];
+      randOpt[action.value] = rotateMatrix(randOpt[action.value]);
+      return { ...state, randomOptions: [...randOpt] };
     case ACTIONS.SELECT_OPTION:
       return { ...state };
     case ACTIONS.CHECK_OPTION_POSITION:

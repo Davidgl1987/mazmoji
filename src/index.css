@@ -38,27 +38,24 @@ code {
   border-collapse: collapse;
 }
 .elements tr td {
+  padding: 0px;
+}
+.elements tr td div.element-col {
   width: 32px;
   height: 32px;
   padding: 0px;
   border: 1px solid;
+  border-collapse: collapse;
+  background-color: white;
 }
-.elements tr td.null {
+.elements tr td div.element-col.null {
   border: 0px;
+  background-color: transparent;
 }
 
-.element {
-  width: 32px;
-  height: 32px;
+.square {
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid;
-}
-
-.element.yes {
-  background-color: rgba(0, 255, 0, 0.5);
-}
-.element.no {
-  background-color: rgba(255, 0, 0, 0.5);
+  height: 100%;
 }

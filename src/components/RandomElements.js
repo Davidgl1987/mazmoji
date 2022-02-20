@@ -1,9 +1,18 @@
 import Element from "./Element";
-import { getOptions } from "../gameHelper";
-import Draggable from "./Draggable";
+import { isWall } from "../gameHelper";
+import { useGameContext } from "../context/GameContext";
+import { ACTIONS } from "../reducers/GameReducer";
 
 const RandomElements = () => {
-  const [randomElem1, randomElem2] = getOptions();
+  const { state, dispatch } = useGameContext();
+  const { randomOptions } = state;
+  const rotateOption = (optionIndex) => {
+    dispatch({
+      type: ACTIONS.ROTATE_OPTION,
+      value: optionIndex,
+    });
+  };
+
   return (
     <div className="random-elements">
       <h4>Choose element</h4>
@@ -15,18 +24,19 @@ const RandomElements = () => {
           margin: "1em 0",
         }}
       >
-        <div>
-          <span>Option 1</span>
-          <Draggable content={randomElem1}>
-            <Element tiles={randomElem1} />
-          </Draggable>
-        </div>
-        <div>
-          <span>Option 2</span>
-          <Draggable content={randomElem2}>
-            <Element tiles={randomElem2} />
-          </Draggable>
-        </div>
+        {randomOptions.map((randomOption, i) => (
+          <div key={i}>
+            <h5>Option {i + 1}</h5>
+            <div style={{ height: 32 * 3 + "px" }}>
+              <Element tiles={randomOption} />
+            </div>
+            {isWall(randomOption) && (
+              <div style={{ margin: "1em" }}>
+                <button onClick={() => rotateOption(i)}>Rotate 🔄</button>
+              </div>
+            )}
+          </div>
+        ))}
       </div>
     </div>
   );

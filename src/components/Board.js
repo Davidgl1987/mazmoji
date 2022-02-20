@@ -1,20 +1,10 @@
-import { useContext } from "react";
-import GameContext from "../context/GameContext";
-import useDragDrop from "../hooks/useDragDrop";
-import Element from "./Element";
+import Square from "./Square";
+import { DropTarget } from "react-drag-drop-container";
+import { useGameContext } from "../context/GameContext";
 
 const Board = () => {
-  const { matrix } = useContext(GameContext);
-  const { onDrop: onDropHook } = useDragDrop();
-  const onDragOver = (e, x, y) => {
-    e.preventDefault();
-    console.log("dragOver", x, y);
-  };
-
-  const onDrop = (e, x, y) => {
-    e.preventDefault();
-    onDropHook(x, y);
-  };
+  const { state } = useGameContext();
+  const { board: matrix } = state;
 
   return (
     <div className="board-container">
@@ -24,12 +14,18 @@ const Board = () => {
             <tr key={x}>
               {row.map((cell, y) => (
                 <td key={y}>
-                  <div
-                    onDragOver={(e) => onDragOver(e, x, y)}
-                    onDrop={(e) => onDrop(e, x, y)}
+                  <DropTarget
+                    style={{ background: "grey" }}
+                    targetKey="square"
+                    onDragEnter={({ dragData }) =>
+                      console.log("dragenter", dragData)
+                    }
+                    onDragLeave={({ dragData }) =>
+                      console.log("dragleave", dragData)
+                    }
                   >
-                    <Element type={cell} x={x} y={y} />
-                  </div>
+                    <Square content={cell} />
+                  </DropTarget>
                 </td>
               ))}
             </tr>
