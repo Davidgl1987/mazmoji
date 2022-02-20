@@ -21,16 +21,30 @@ code {
   text-align: center;
   margin: auto;
   /* background-color: red; */
+  
 }
-
 .board-container table {
   border-collapse: collapse;
-  border: 1px solid;
+  border: 2px solid;
 }
 .board-container table td {
   width: 32px;
   height: 32px;
   padding: 0px;
+  border: 1px solid;
+}
+
+.elements {
+  border-collapse: collapse;
+}
+.elements tr td {
+  width: 32px;
+  height: 32px;
+  padding: 0px;
+  border: 1px solid;
+}
+.elements tr td.null {
+  border: 0px;
 }
 
 .element {

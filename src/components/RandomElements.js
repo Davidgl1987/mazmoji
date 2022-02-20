@@ -1,10 +1,11 @@
 import Element from "./Element";
-import { ELEMENT_TYPES } from "../gameHelper";
+import { getOptions } from "../gameHelper";
 import Draggable from "./Draggable";
 
 const RandomElements = () => {
+  const [randomElem1, randomElem2] = getOptions();
   return (
-    <div>
+    <div className="random-elements">
       <h4>Choose element</h4>
       <div
         style={{
@@ -16,20 +17,14 @@ const RandomElements = () => {
       >
         <div>
           <span>Option 1</span>
-          <Draggable content={ELEMENT_TYPES.WALL}>
-            <Element type={ELEMENT_TYPES.WALL} />
+          <Draggable content={randomElem1}>
+            <Element tiles={randomElem1} />
           </Draggable>
         </div>
         <div>
           <span>Option 2</span>
-          <Draggable content={ELEMENT_TYPES.SNAKE}>
-            <Element type={ELEMENT_TYPES.SNAKE} />
-          </Draggable>
-        </div>
-        <div>
-          <span>Option 3</span>
-          <Draggable content={ELEMENT_TYPES.SPIDER}>
-            <Element type={ELEMENT_TYPES.SPIDER} />
+          <Draggable content={randomElem2}>
+            <Element tiles={randomElem2} />
           </Draggable>
         </div>
       </div>
