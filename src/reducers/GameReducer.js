@@ -1,9 +1,4 @@
-import {
-  createBoard,
-  getOptions,
-  getTrasposeMatrix,
-  rotateMatrix,
-} from "../gameHelper";
+import { createBoard, getOptions, rotateMatrix } from "../gameHelper";
 
 export const initialGameState = {
   player: "",
@@ -15,8 +10,8 @@ export const initialGameState = {
     SPIDER: 1,
     SNAKE: 1,
     CTHULHU: 1,
-    TRAPS: 1,
-    TREASURES: 1,
+    TRAP: 1,
+    DIAMOND: 1,
   },
 };
 

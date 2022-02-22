@@ -1,5 +1,5 @@
 import Square from "./Square";
-import { ELEMENT_TYPES, isWall } from "../gameHelper";
+import { isWall } from "../gameHelper";
 import { DragDropContainer } from "react-drag-drop-container";
 
 const Element = ({ tiles }) => {

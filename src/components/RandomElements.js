@@ -15,13 +15,12 @@ const RandomElements = () => {
 
   return (
     <div className="random-elements">
-      <h4>Choose element</h4>
+      <h4 style={{ margin: 0 }}>Choose element</h4>
       <div
         style={{
           display: "flex",
           flexDirection: "row",
           justifyContent: "space-around",
-          margin: "1em 0",
         }}
       >
         {randomOptions.map((randomOption, i) => (
