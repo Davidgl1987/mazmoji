@@ -59,3 +59,11 @@ code {
   align-items: center;
   height: 100%;
 }
+
+.forbidden {
+  background-color: rgba(255, 0, 0, 0.5);
+}
+
+.permitted {
+  background-color: rgba(0, 255, 0, 0.5);
+}
