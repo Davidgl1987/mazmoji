@@ -115,7 +115,7 @@ export const isWall = (tiles) => {
   );
 };
 
-export const checkOptionPosition = (board, x, y, tile) => {
+export const checkOptionPosition = (board, x, y, tile, touched) => {
   // Devuelve un tablero con la pieza (tile) en la posición xy
   // comprobando lo que ya hay en board
   let checkBoard = createBoard();
@@ -132,11 +132,21 @@ export const checkOptionPosition = (board, x, y, tile) => {
     // Si alguna pieza que compone el tile...
     for (let i = 0; i < tile.length; i++) {
       for (let j = 0; j < tile[i].length; j++) {
+        //TODO: usar el 'touched' como offset al pintar y comprobar la posición
         // ...se sale del tablero
-        if (x + j >= BOARD_WIDTH || y + i >= BOARD_HEIGHT) permitted = false;
-        // ...es la de salida
-        if (x + j === BOARD_WIDTH - 1 && y + i === BOARD_HEIGHT - 1)
+        if (
+          x + j - touched.x >= BOARD_WIDTH ||
+          y + i - touched.y >= BOARD_HEIGHT
+        )
           permitted = false;
+        // ...es la de salida
+        if (
+          x + j - touched.x === BOARD_WIDTH - 1 &&
+          y + i - touched.y === BOARD_HEIGHT - 1
+        )
+          permitted = false;
+        // .. no está dentro del tablero
+        if (x + j - touched.x < 0 || y + i - touched.y < 0) permitted = false;
         // ...está ocupada
         if (board[i][j] !== null) permitted = false;
         // ...cierra una parte de la mazmorra
@@ -149,8 +159,17 @@ export const checkOptionPosition = (board, x, y, tile) => {
   if (isWall(tile)) {
     for (let i = 0; i < tile.length; i++) {
       for (let j = 0; j < tile[i].length; j++) {
-        if (tile[i][j] !== null && x + j < BOARD_WIDTH && y + i < BOARD_HEIGHT)
-          checkBoard[y + i][x + j] = permitted ? "permitted" : "forbidden";
+        if (
+          tile[i][j] !== null &&
+          x + j - touched.x < BOARD_WIDTH &&
+          y + i - touched.y < BOARD_HEIGHT &&
+          x + j - touched.x >= 0 &&
+          y + i - touched.y >= 0
+        ) {
+          checkBoard[y + i - touched.y][x + j - touched.x] = permitted
+            ? "permitted"
+            : "forbidden";
+        }
       }
     }
   } else {

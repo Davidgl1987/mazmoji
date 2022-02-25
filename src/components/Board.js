@@ -7,10 +7,11 @@ const Board = () => {
   const { state, dispatch } = useGameContext();
   const { board: matrix, checkBoard } = state;
 
-  const checkOptionPosition = (tile, x, y) => {
+  const checkOptionPosition = (dragData, x, y) => {
+    const { tiles, touched } = dragData;
     dispatch({
       type: ACTIONS.CHECK_OPTION_POSITION,
-      value: { tile, x, y },
+      value: { tiles, x, y, touched },
     });
   };
 

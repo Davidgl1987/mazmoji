@@ -41,8 +41,8 @@ export const GameReducer = (state, action) => {
     case ACTIONS.CLEAR_CHECK_OPTION:
       return { ...state, checkBoard: createBoard() };
     case ACTIONS.CHECK_OPTION_POSITION:
-      const { tile, x, y } = action.value;
-      let checkBoard = checkOptionPosition(state.board, x, y, tile);
+      const { tiles, x, y, touched } = action.value;
+      let checkBoard = checkOptionPosition(state.board, x, y, tiles, touched);
       return { ...state, checkBoard };
     case ACTIONS.SET_OPTION_ON_BOARD:
       return { ...state };
