@@ -1,6 +1,3 @@
-import Board from "./components/Board";
-import RandomElements from "./components/RandomElements";
-import Levels from "./components/Levels";
 import Game from "./components/Game";
 
 const App = () => {

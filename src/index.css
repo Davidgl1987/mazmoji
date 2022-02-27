@@ -1,27 +1,59 @@
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+  }
+  html, body, #root { height: 100%;}
+  
+.App {
+  height: 100%;
+  min-height: 100%;
+	display: flex;
+	flex-direction: column;
+}
+.App header {
+  background-color: burlywood;
 }
 
-.App {
+h3, h5 {
+  text-align: center;
+}
+
+.App main {
   display: flex;
   flex-direction: column;
-  max-width: 100vh;
-  height: 100vh;
+  flex: 1;
   align-items: center;
+  justify-content: space-evenly;
+}
+
+.ui {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
+.random-elements {
   text-align: center;
-  margin: auto;
-  /* background-color: red; */
-  
+}
+.random-elements .container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.board-container {
+  margin: 1em;
 }
 .board-container table {
   border-collapse: collapse;
@@ -36,6 +68,7 @@ code {
 
 .elements {
   border-collapse: collapse;
+  width: 100%;
 }
 .elements tr td {
   padding: 0px;
@@ -53,6 +86,10 @@ code {
   background-color: transparent;
 }
 
+.levels .container .square {
+  margin: 0.5em;
+}
+
 .square {
   display: flex;
   justify-content: center;
@@ -66,4 +103,27 @@ code {
 
 .permitted {
   background-color: rgba(0, 255, 0, 0.5);
+}
+
+@media (orientation: landscape) { 
+  .App main {
+    flex-direction: row;
+  }
+  .ui {
+    flex-direction: column;
+    align-items: center;
+    width: auto;
+    height: 100%;
+    justify-content: space-between;
+  }
+  .levels .container {
+    display: flex;
+    margin-bottom: 1em;
+  }
+}
+
+@media (min-width: 700px) {
+  .ui {
+    height: 350px;
+  }
 }

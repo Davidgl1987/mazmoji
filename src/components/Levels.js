@@ -1,43 +1,27 @@
 import { useGameContext } from "../context/GameContext";
-import { ELEMENT_TYPES } from "../gameHelper";
+import { ELEMENTS } from "../gameHelper";
 
 const Levels = () => {
   const { state } = useGameContext();
   const { levels } = state;
   return (
-    <div>
-      <h4>Levels</h4>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-around",
-          alignItems: "center",
-        }}
-      >
-        <div>
-          <strong>Diamonds</strong>
-          <div className="square">
-            {ELEMENT_TYPES.DIAMOND} {levels.DIAMOND}
-          </div>
+    <div className="levels">
+      <h5>Levels</h5>
+      <div className="container">
+        <div className="square">
+          {ELEMENTS.DIAMOND.img} {levels.DIAMOND}
         </div>
-        <div>
-          <strong>Monsters</strong>
-          <div className="square">
-            {ELEMENT_TYPES.SPIDER} {levels.SPIDER}
-          </div>
-          <div className="square">
-            {ELEMENT_TYPES.SNAKE} {levels.SNAKE}
-          </div>
-          <div className="square">
-            {ELEMENT_TYPES.CTHULHU} {levels.CTHULHU}
-          </div>
+        <div className="square">
+          {ELEMENTS.SPIDER.img} {levels.SPIDER}
         </div>
-        <div>
-          <strong>Traps</strong>
-          <div className="square">
-            {ELEMENT_TYPES.TRAP} {levels.TRAP}
-          </div>
+        <div className="square">
+          {ELEMENTS.SNAKE.img} {levels.SNAKE}
+        </div>
+        <div className="square">
+          {ELEMENTS.CTHULHU.img} {levels.CTHULHU}
+        </div>
+        <div className="square">
+          {ELEMENTS.TRAP.img} {levels.TRAP}
         </div>
       </div>
     </div>

@@ -1,4 +1,4 @@
-export const BOARD_HEIGHT = 7;
+export const BOARD_HEIGHT = 8;
 export const BOARD_WIDTH = 10;
 
 export const createBoard = () => {
@@ -7,87 +7,63 @@ export const createBoard = () => {
 
 export const MAX_TURNS = 20;
 
-export const PROBABILITIES = {
-  WALL: 0.6, //0.8,
-  MONSTER: 0.5, //0.65,
-  TRAP: 0.4, //0.15,
-  LEVEL: 0.3, //0.2,
-  DIAMOND: 0.2,
+export const ELEMENTS = {
+  WALL: { img: "🟫", probability: 2 },
+  SPIDER: { img: "🕷️", probability: 0.6 },
+  SNAKE: { img: "🐍", probability: 0.4 },
+  CTHULHU: { img: "🦑", probability: 0.2 },
+  DIAMOND: { img: "💎", probability: 0.2 },
+  TRAP: { img: "♨️", probability: 0.4 },
+  LEVEL: { img: "⬆️", probability: 0.2 },
 };
 
-export const ELEMENT_TYPES = {
-  GROUND: "⬜",
-  WALL: "🟫",
-  SPIDER: "🕷️",
-  SNAKE: "🐍",
-  CTHULHU: "🦑",
-  DIAMOND: "💎",
-  TRAP: "♨️",
-  LEVEL: "⬆️",
-};
-
-export const getOptions = (
-  howMany = 2,
-  options = Object.keys(PROBABILITIES),
-  result = []
-) => {
-  if (howMany === 0) return result;
-  const randomKeyElem = Math.floor(Math.random() * (options.length + 1));
-  const randomElem = options[randomKeyElem];
-  let elem = ELEMENT_TYPES[randomElem];
-  const randomProb = Math.random();
-  if (PROBABILITIES[randomElem] >= randomProb) {
-    switch (randomElem) {
-      case "MONSTER":
-        elem =
-          MONSTER_GROUPS[Math.floor(Math.random() * MONSTER_GROUPS.length)];
-        break;
-      case "WALL":
-        elem = WALL_GROUPS[Math.floor(Math.random() * WALL_GROUPS.length)];
-        break;
-      default:
-        elem = [[elem]];
+export const getRandomOption = () => {
+  const totalProbability = Object.keys(ELEMENTS).reduce(
+    (prev, curr) => prev + ELEMENTS[curr].probability,
+    0
+  );
+  const randomProbability = Math.random() * totalProbability;
+  let sumProbability = 0;
+  for (let i = 0; i < Object.keys(ELEMENTS).length; i++) {
+    const keyElement = Object.keys(ELEMENTS)[i];
+    const element = ELEMENTS[keyElement];
+    sumProbability += element.probability;
+    if (randomProbability <= sumProbability) {
+      if (element.img === ELEMENTS.WALL.img) {
+        return WALL_GROUPS[Math.floor(Math.random() * WALL_GROUPS.length)];
+      }
+      return [[element.img]];
     }
-    options.splice(randomKeyElem, 1);
-    return getOptions(howMany - 1, options, result.concat([elem]));
-  } else {
-    if (options.length === 0) options = Object.keys(PROBABILITIES);
-    return getOptions(howMany, options, result);
   }
 };
 
 export const WALL_GROUPS = [
   [
-    [null, null, ELEMENT_TYPES.WALL],
-    [null, ELEMENT_TYPES.WALL, null],
-    [ELEMENT_TYPES.WALL, null, null],
+    [
+      ELEMENTS.WALL.img,
+      ELEMENTS.WALL.img,
+      ELEMENTS.WALL.img,
+      ELEMENTS.WALL.img,
+    ],
   ],
   [
-    [ELEMENT_TYPES.WALL, null],
-    [null, ELEMENT_TYPES.WALL],
-    [ELEMENT_TYPES.WALL, null],
+    [ELEMENTS.WALL.img, ELEMENTS.WALL.img],
+    [ELEMENTS.WALL.img, ELEMENTS.WALL.img],
   ],
   [
-    [null, null, ELEMENT_TYPES.WALL],
-    [ELEMENT_TYPES.WALL, ELEMENT_TYPES.WALL, null],
+    [ELEMENTS.WALL.img, null],
+    [ELEMENTS.WALL.img, null],
+    [ELEMENTS.WALL.img, ELEMENTS.WALL.img],
   ],
-  [[ELEMENT_TYPES.WALL, ELEMENT_TYPES.WALL, ELEMENT_TYPES.WALL]],
-  [[ELEMENT_TYPES.WALL], [ELEMENT_TYPES.WALL]],
   [
-    [ELEMENT_TYPES.WALL, null],
-    [null, ELEMENT_TYPES.WALL],
+    [ELEMENTS.WALL.img, null],
+    [ELEMENTS.WALL.img, ELEMENTS.WALL.img],
+    [null, ELEMENTS.WALL.img],
   ],
-];
-
-export const MONSTER_GROUPS = [
   [
-    [[ELEMENT_TYPES.SPIDER], [ELEMENT_TYPES.SPIDER]],
-    [[ELEMENT_TYPES.SPIDER], [ELEMENT_TYPES.SPIDER]],
+    [ELEMENTS.WALL.img, ELEMENTS.WALL.img, ELEMENTS.WALL.img],
+    [null, ELEMENTS.WALL.img, null],
   ],
-  [[[ELEMENT_TYPES.SPIDER], [ELEMENT_TYPES.SPIDER]], [[ELEMENT_TYPES.SNAKE]]],
-  [[[ELEMENT_TYPES.SPIDER], [ELEMENT_TYPES.SNAKE]], [[ELEMENT_TYPES.SNAKE]]],
-  [[[ELEMENT_TYPES.SPIDER], [ELEMENT_TYPES.CTHULHU]]],
-  [[ELEMENT_TYPES.CTHULHU]],
 ];
 
 export const rotateMatrix = (source) => {
@@ -110,7 +86,7 @@ export const rotateMatrix = (source) => {
 
 export const isWall = (tiles) => {
   return (
-    tiles.findIndex((r) => r.findIndex((c) => c === ELEMENT_TYPES.WALL) > -1) >
+    tiles.findIndex((r) => r.findIndex((c) => c === ELEMENTS.WALL.img) > -1) >
     -1
   );
 };

@@ -6,9 +6,11 @@ import RandomElements from "./RandomElements";
 const Game = () => {
   return (
     <GameContextProvider>
-      <RandomElements />
+      <div className="ui">
+        <RandomElements />
+        <Levels />
+      </div>
       <Board />
-      <Levels />
     </GameContextProvider>
   );
 };

@@ -37,7 +37,6 @@ const Element = ({ tiles }) => {
               {row.map((col, c) => (
                 <td
                   key={r + "_" + c}
-                  className={"element-col " + col}
                   onPointerDown={({ target }) => setTouched({ x: c, y: r })}
                 >
                   <DragDropContainer

@@ -5,37 +5,23 @@ import { ACTIONS } from "../reducers/GameReducer";
 
 const RandomElements = () => {
   const { state, dispatch } = useGameContext();
-  const { randomOptions } = state;
-  const rotateOption = (optionIndex) => {
+  const { randomOption } = state;
+  const rotateOption = () => {
     dispatch({
       type: ACTIONS.ROTATE_OPTION,
-      value: optionIndex,
     });
   };
 
   return (
     <div className="random-elements">
-      <h4 style={{ margin: 0 }}>Choose element</h4>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-around",
-        }}
-      >
-        {randomOptions.map((randomOption, i) => (
-          <div key={i}>
-            <h5>Option {i + 1}</h5>
-            <div style={{ height: 32 * 3 + "px" }}>
-              <Element tiles={randomOption} />
-            </div>
-            {isWall(randomOption) && (
-              <div style={{ margin: "1em" }}>
-                <button onClick={() => rotateOption(i)}>Rotate 🔄</button>
-              </div>
-            )}
+      <h5>Use this on board!</h5>
+      <div className="container">
+        {isWall(randomOption) && (
+          <div style={{ margin: "1em" }}>
+            <button onClick={() => rotateOption()}>Rotate 🔄</button>
           </div>
-        ))}
+        )}
+        <Element tiles={randomOption} />
       </div>
     </div>
   );

@@ -21,6 +21,13 @@ const Board = () => {
     });
   };
 
+  const setOptionOnBoard = (tiles, x, y) => {
+    dispatch({
+      type: ACTIONS.SET_OPTION_ON_BOARD,
+      value: { tiles, x, y },
+    });
+  };
+
   return (
     <div className="board-container">
       <table>
@@ -36,7 +43,9 @@ const Board = () => {
                       checkOptionPosition(dragData, x, y)
                     }
                     onDragLeave={({ dragData }) => clearCheckOption()}
-                    onHit={({ dragData }) => console.log("onHit", dragData)}
+                    onHit={({ dragData }) =>
+                      setOptionOnBoard(dragData.tiles, x, y)
+                    }
                   >
                     <Square content={cell} />
                   </DropTarget>
