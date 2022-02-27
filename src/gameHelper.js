@@ -1,6 +1,9 @@
 export const BOARD_HEIGHT = 8;
 export const BOARD_WIDTH = 10;
 
+export const PERMITTED_CLASS = "permitted";
+export const FORBIDDEN_CLASS = "forbidden";
+
 export const createBoard = () => {
   return Array.from(Array(BOARD_HEIGHT), () => Array(BOARD_WIDTH).fill(null));
 };
@@ -96,60 +99,58 @@ export const checkOptionPosition = (board, x, y, tile, touched) => {
   // comprobando lo que ya hay en board
   let checkBoard = createBoard();
   let permitted = true;
-  // No se puede colocar en la entrada
-  if (x === 0 && y === 0) permitted = false;
-  // Ni en la salida
-  if (x === BOARD_WIDTH - 1 && y === BOARD_HEIGHT - 1) permitted = false;
-  // Ni en una casilla ocupada
-  if (board[y][x] !== null) permitted = false;
-  // Si cierra una parte de la mazmorra
-  // TODO: Llamar A* para cada casilla vacía
-  if (isWall(tile)) {
-    // Si alguna pieza que compone el tile...
-    for (let i = 0; i < tile.length; i++) {
-      for (let j = 0; j < tile[i].length; j++) {
-        //TODO: usar el 'touched' como offset al pintar y comprobar la posición
-        // ...se sale del tablero
-        if (
-          x + j - touched.x >= BOARD_WIDTH ||
-          y + i - touched.y >= BOARD_HEIGHT
-        )
-          permitted = false;
-        // ...es la de salida
-        if (
-          x + j - touched.x === BOARD_WIDTH - 1 &&
-          y + i - touched.y === BOARD_HEIGHT - 1
-        )
-          permitted = false;
-        // .. no está dentro del tablero
-        if (x + j - touched.x < 0 || y + i - touched.y < 0) permitted = false;
+
+  // Si alguna pieza que compone el tile...
+  for (let i = 0; i < tile.length; i++) {
+    for (let j = 0; j < tile[i].length; j++) {
+      if (tile[i][j] === null) continue;
+      // Usamos el 'touched' como offset al pintar y comprobar la posición
+      let newX = x + j - touched.x;
+      let newY = y + i - touched.y;
+      // ...se sale del tablero
+      if (newX >= BOARD_WIDTH || newY >= BOARD_HEIGHT) permitted = false;
+      // ...es la entrada
+      if (newX === 0 && newY === 0) permitted = false;
+      // ...es la de salida
+      if (newX === BOARD_WIDTH - 1 && newY === BOARD_HEIGHT - 1)
+        permitted = false;
+      // .. no está dentro del tablero
+      if (newX < 0 || newY < 0) permitted = false;
+      else {
         // ...está ocupada
-        if (board[i][j] !== null) permitted = false;
-        // ...cierra una parte de la mazmorra
-        // TODO: Llamar A* para cada casilla vacía
+        if (board[newY][newX] !== null) permitted = false;
       }
+      // ...cierra una parte de la mazmorra
+      // TODO: Llamar A* para cada casilla vacía
     }
   }
 
   // Coloreamos el checkBoard
-  if (isWall(tile)) {
-    for (let i = 0; i < tile.length; i++) {
-      for (let j = 0; j < tile[i].length; j++) {
-        if (
-          tile[i][j] !== null &&
-          x + j - touched.x < BOARD_WIDTH &&
-          y + i - touched.y < BOARD_HEIGHT &&
-          x + j - touched.x >= 0 &&
-          y + i - touched.y >= 0
-        ) {
-          checkBoard[y + i - touched.y][x + j - touched.x] = permitted
-            ? "permitted"
-            : "forbidden";
-        }
+  for (let i = 0; i < tile.length; i++) {
+    for (let j = 0; j < tile[i].length; j++) {
+      let newX = x + j - touched.x;
+      let newY = y + i - touched.y;
+      if (
+        tile[i][j] !== null &&
+        newX < BOARD_WIDTH &&
+        newY < BOARD_HEIGHT &&
+        newX >= 0 &&
+        newY >= 0
+      ) {
+        checkBoard[newY][newX] = permitted ? PERMITTED_CLASS : FORBIDDEN_CLASS;
       }
     }
-  } else {
-    checkBoard[y][x] = permitted ? "permitted" : "forbidden";
   }
   return checkBoard;
+};
+
+export const setOptionOnBoard = (board, x, y, tile, checkBoard) => {
+  for (let i = 0; i < board.length; i++) {
+    const row = board[i];
+    for (let j = 0; j < row.length; j++) {
+      const permitted = checkBoard[i][j] === PERMITTED_CLASS;
+      if (permitted) board[i][j] = tile[0][0];
+    }
+  }
+  return board;
 };

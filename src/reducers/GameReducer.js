@@ -2,7 +2,9 @@ import {
   checkOptionPosition,
   createBoard,
   getRandomOption,
+  PERMITTED_CLASS,
   rotateMatrix,
+  setOptionOnBoard,
 } from "../gameHelper";
 
 export const initialGameState = {
@@ -42,17 +44,31 @@ export const GameReducer = (state, action) => {
     case ACTIONS.CLEAR_CHECK_OPTION:
       return { ...state, checkBoard: createBoard() };
     case ACTIONS.CHECK_OPTION_POSITION:
-      let checkBoard = checkOptionPosition(
-        state.board,
-        value.x,
-        value.y,
-        value.tiles,
-        value.touched
-      );
-      return { ...state, checkBoard };
+      return {
+        ...state,
+        checkBoard: checkOptionPosition(
+          state.board,
+          value.x,
+          value.y,
+          value.tiles,
+          value.touched
+        ),
+      };
     case ACTIONS.SET_OPTION_ON_BOARD:
-      console.log("SET_OPTION_ON_BOARD", value.tiles, value.x, value.y);
-      return { ...state };
+      const permitted = state.checkBoard[value.y][value.x] === PERMITTED_CLASS;
+      return {
+        ...state,
+        checkBoard: createBoard(),
+        board: setOptionOnBoard(
+          state.board,
+          value.x,
+          value.y,
+          value.tiles,
+          state.checkBoard
+        ),
+        randomOption: permitted ? getRandomOption() : state.randomOption,
+        turns: permitted ? state.turns : state.turns + 1,
+      };
     case ACTIONS.SET_OPTION_ON_LEVELS:
       return { ...state };
 
