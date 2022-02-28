@@ -1,3 +1,5 @@
+import EasyStar from "easystarjs";
+
 export const BOARD_HEIGHT = 8;
 export const BOARD_WIDTH = 10;
 
@@ -110,20 +112,52 @@ export const checkOptionPosition = (board, x, y, tile, touched) => {
       // ...se sale del tablero
       if (newX >= BOARD_WIDTH || newY >= BOARD_HEIGHT) permitted = false;
       // ...es la entrada
-      if (newX === 0 && newY === 0) permitted = false;
+      else if (newX === 0 && newY === 0) permitted = false;
       // ...es la de salida
-      if (newX === BOARD_WIDTH - 1 && newY === BOARD_HEIGHT - 1)
+      else if (newX === BOARD_WIDTH - 1 && newY === BOARD_HEIGHT - 1)
         permitted = false;
       // .. no está dentro del tablero
-      if (newX < 0 || newY < 0) permitted = false;
-      else {
-        // ...está ocupada
-        if (board[newY][newX] !== null) permitted = false;
-      }
-      // ...cierra una parte de la mazmorra
-      // TODO: Llamar A* para cada casilla vacía
+      else if (newX < 0 || newY < 0) permitted = false;
+      // ...está ocupada
+      else if (board[newY][newX] !== null) permitted = false;
     }
   }
+  // ...cierra una parte de la mazmorra
+  // Al algoritmo A* hay que pasarle un tablero con la pieza "puesta"
+  let easystar = new EasyStar.js();
+  let boardWithTile = JSON.parse(JSON.stringify(board));
+  for (let i = 0; i < tile.length; i++) {
+    for (let j = 0; j < tile[i].length; j++) {
+      let newX = x + j - touched.x;
+      let newY = y + i - touched.y;
+      if (
+        tile[i][j] !== null &&
+        newX < BOARD_WIDTH &&
+        newY < BOARD_HEIGHT &&
+        newX >= 0 &&
+        newY >= 0
+      ) {
+        if (permitted) boardWithTile[newY][newX] = ELEMENTS.WALL.img;
+      }
+    }
+  }
+  easystar.setGrid(boardWithTile);
+  let acceptableTiles = Object.keys(ELEMENTS).reduce(
+    (prev, curr) =>
+      curr === "WALL" ? prev : prev.concat([ELEMENTS[curr].img]),
+    [null]
+  );
+  easystar.setAcceptableTiles(acceptableTiles);
+  // TODO: Hay que pasarle todas las casillas sin WALL
+  // Todas las casillas tienen que ser accesibles
+  easystar.findPath(0, 0, BOARD_WIDTH - 1, BOARD_HEIGHT - 1, function (path) {
+    if (path === null) {
+      permitted = false;
+      console.log("No hay una salida!");
+    }
+  });
+  easystar.enableSync();
+  easystar.calculate();
 
   // Coloreamos el checkBoard
   for (let i = 0; i < tile.length; i++) {
