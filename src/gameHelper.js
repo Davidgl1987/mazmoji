@@ -148,16 +148,24 @@ export const checkOptionPosition = (board, x, y, tile, touched) => {
     [null]
   );
   easystar.setAcceptableTiles(acceptableTiles);
-  // TODO: Hay que pasarle todas las casillas sin WALL
+
   // Todas las casillas tienen que ser accesibles
-  easystar.findPath(0, 0, BOARD_WIDTH - 1, BOARD_HEIGHT - 1, function (path) {
-    if (path === null) {
-      permitted = false;
-      console.log("No hay una salida!");
+  if (permitted) {
+    for (let i = 0; i < boardWithTile.length; i++) {
+      const row = boardWithTile[i];
+      for (let j = 0; j < row.length; j++) {
+        const cell = row[j];
+        if ((i === 0 && j === 0) || cell === ELEMENTS.WALL.img) continue;
+        easystar.findPath(0, 0, j, i, function (path) {
+          if (path === null) permitted = false;
+        });
+        easystar.enableSync();
+        easystar.calculate();
+        if (!permitted) break;
+      }
+      if (!permitted) break;
     }
-  });
-  easystar.enableSync();
-  easystar.calculate();
+  }
 
   // Coloreamos el checkBoard
   for (let i = 0; i < tile.length; i++) {
@@ -179,11 +187,22 @@ export const checkOptionPosition = (board, x, y, tile, touched) => {
 };
 
 export const setOptionOnBoard = (board, x, y, tile, checkBoard) => {
+  let tileType = null;
+  for (let i = 0; i < tile.length; i++) {
+    for (let j = 0; j < tile[i].length; j++) {
+      const t = tile[i][j];
+      if (t !== null) {
+        tileType = t;
+        break;
+      }
+    }
+    if (tileType !== null) break;
+  }
   for (let i = 0; i < board.length; i++) {
     const row = board[i];
     for (let j = 0; j < row.length; j++) {
       const permitted = checkBoard[i][j] === PERMITTED_CLASS;
-      if (permitted) board[i][j] = tile[0][0];
+      if (permitted) board[i][j] = tileType;
     }
   }
   return board;
