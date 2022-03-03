@@ -1,17 +1,15 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen','Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
   
-  code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-  }
-  html, body, #root { height: 100%;}
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+html, body, #root { height: 100%;}
   
 .App {
   height: 100%;
@@ -24,6 +22,7 @@ body {
 }
 
 h3, h5 {
+  margin: 0.6em;
   text-align: center;
 }
 
@@ -37,24 +36,23 @@ h3, h5 {
 
 .ui {
   display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  justify-content: space-evenly;
-  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 30%;
 }
 
 .random-elements {
   text-align: center;
+  margin: auto;
 }
 .random-elements .container {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
 
-.board-container {
-  margin: 1em;
-}
 .board-container table {
   border-collapse: collapse;
   border: 2px solid;
@@ -64,6 +62,10 @@ h3, h5 {
   height: 32px;
   padding: 0px;
   border: 1px solid;
+}
+.board-container .entrada-salida,
+.board-container .entrada-salida td {
+  border-color: transparent;
 }
 
 .elements {
@@ -86,6 +88,9 @@ h3, h5 {
   background-color: transparent;
 }
 
+.levels .container {
+  display: flex;
+}
 .levels .container .square {
   margin: 0.5em;
 }
@@ -105,6 +110,11 @@ h3, h5 {
   background-color: rgba(0, 255, 0, 0.5);
 }
 
+.messages {
+  border: 1px solid burlywood;
+  border-radius: 0.3rem;
+}
+
 @media (orientation: landscape) { 
   .App main {
     flex-direction: row;
@@ -113,12 +123,11 @@ h3, h5 {
     flex-direction: column;
     align-items: center;
     width: auto;
-    height: 100%;
-    justify-content: space-between;
+    justify-content: space-around;
   }
   .levels .container {
     display: flex;
-    margin-bottom: 1em;
+    flex-direction: column;
   }
 }
 

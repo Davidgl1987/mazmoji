@@ -1,7 +1,7 @@
 import EasyStar from "easystarjs";
 
-export const BOARD_HEIGHT = 8;
-export const BOARD_WIDTH = 10;
+export const BOARD_HEIGHT = 6;
+export const BOARD_WIDTH = 8;
 
 export const PERMITTED_CLASS = "permitted";
 export const FORBIDDEN_CLASS = "forbidden";

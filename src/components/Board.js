@@ -2,6 +2,7 @@ import Square from "./Square";
 import { DropTarget } from "react-drag-drop-container";
 import { useGameContext } from "../context/GameContext";
 import { ACTIONS } from "../reducers/GameReducer";
+import { BOARD_WIDTH } from "../gameHelper";
 
 const Board = () => {
   const { state, dispatch } = useGameContext();
@@ -30,6 +31,15 @@ const Board = () => {
 
   return (
     <div className="board-container">
+      <table className="entrada-salida">
+        <tbody>
+          <tr>
+            {[...Array(BOARD_WIDTH).keys()].map((i) => (
+              <td key={i}>{i === 0 ? <Square content={"🔻"} /> : null}</td>
+            ))}
+          </tr>
+        </tbody>
+      </table>
       <table>
         <tbody>
           {matrix.map((row, y) => (
@@ -53,6 +63,17 @@ const Board = () => {
               ))}
             </tr>
           ))}
+        </tbody>
+      </table>
+      <table className="entrada-salida">
+        <tbody>
+          <tr>
+            {[...Array(BOARD_WIDTH).keys()].map((i) => (
+              <td key={i}>
+                {i === BOARD_WIDTH - 1 ? <Square content={"🔻"} /> : null}
+              </td>
+            ))}
+          </tr>
         </tbody>
       </table>
     </div>

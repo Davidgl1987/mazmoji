@@ -14,7 +14,6 @@ const RandomElements = () => {
 
   return (
     <div className="random-elements">
-      <h5>Use this on board!</h5>
       <div className="container">
         {isWall(randomOption) && (
           <div style={{ margin: "1em" }}>
