@@ -6,6 +6,7 @@ import {
   rotateMatrix,
   setOptionOnBoard,
 } from "../gameHelper";
+import { en } from "../langs/en";
 
 export const initialGameState = {
   player: "",
@@ -14,6 +15,10 @@ export const initialGameState = {
   randomOption: getRandomOption(),
   selectedOption: null,
   turns: 0,
+  message: {
+    text: en.DRAG_PIECE,
+    class: "",
+  },
   levels: {
     SPIDER: 1,
     SNAKE: 1,
@@ -44,15 +49,20 @@ export const GameReducer = (state, action) => {
     case ACTIONS.CLEAR_CHECK_OPTION:
       return { ...state, checkBoard: createBoard() };
     case ACTIONS.CHECK_OPTION_POSITION:
+      const { checkBoard, error_text } = checkOptionPosition(
+        state.board,
+        value.x,
+        value.y,
+        value.tiles,
+        value.touched
+      );
       return {
         ...state,
-        checkBoard: checkOptionPosition(
-          state.board,
-          value.x,
-          value.y,
-          value.tiles,
-          value.touched
-        ),
+        checkBoard,
+        message: {
+          text: error_text ? error_text : en.GOOD_PLACE,
+          class: error_text ? "forbidden" : "permitted",
+        },
       };
     case ACTIONS.SET_OPTION_ON_BOARD:
       const permitted = state.checkBoard[value.y][value.x] === PERMITTED_CLASS;
@@ -67,7 +77,11 @@ export const GameReducer = (state, action) => {
           state.checkBoard
         ),
         randomOption: permitted ? getRandomOption() : state.randomOption,
-        turns: permitted ? state.turns : state.turns + 1,
+        turns: permitted ? state.turns + 1 : state.turns,
+        message: {
+          text: en.DRAG_PIECE,
+          class: "",
+        },
       };
     case ACTIONS.SET_OPTION_ON_LEVELS:
       return { ...state };

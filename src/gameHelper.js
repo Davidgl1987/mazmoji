@@ -1,4 +1,5 @@
 import EasyStar from "easystarjs";
+import { en } from "./langs/en";
 
 export const BOARD_HEIGHT = 6;
 export const BOARD_WIDTH = 8;
@@ -101,6 +102,7 @@ export const checkOptionPosition = (board, x, y, tile, touched) => {
   // comprobando lo que ya hay en board
   let checkBoard = createBoard();
   let permitted = true;
+  let error_text = false;
 
   // Si alguna pieza que compone el tile...
   for (let i = 0; i < tile.length; i++) {
@@ -110,16 +112,30 @@ export const checkOptionPosition = (board, x, y, tile, touched) => {
       let newX = x + j - touched.x;
       let newY = y + i - touched.y;
       // ...se sale del tablero
-      if (newX >= BOARD_WIDTH || newY >= BOARD_HEIGHT) permitted = false;
-      // ...es la entrada
-      else if (newX === 0 && newY === 0) permitted = false;
-      // ...es la de salida
-      else if (newX === BOARD_WIDTH - 1 && newY === BOARD_HEIGHT - 1)
+      if (newX >= BOARD_WIDTH || newY >= BOARD_HEIGHT) {
         permitted = false;
+        error_text = en.ERROR_OUT_OF_BOARD;
+      }
+      // ...es la entrada
+      else if (newX === 0 && newY === 0) {
+        permitted = false;
+        error_text = en.ERROR_ENTRANCE;
+      }
+      // ...es la de salida
+      else if (newX === BOARD_WIDTH - 1 && newY === BOARD_HEIGHT - 1) {
+        permitted = false;
+        error_text = en.ERROR_EXIT;
+      }
       // .. no está dentro del tablero
-      else if (newX < 0 || newY < 0) permitted = false;
+      else if (newX < 0 || newY < 0) {
+        permitted = false;
+        error_text = en.ERROR_OUT_OF_BOARD;
+      }
       // ...está ocupada
-      else if (board[newY][newX] !== null) permitted = false;
+      else if (board[newY][newX] !== null) {
+        permitted = false;
+        error_text = en.ERROR_CELL_OCCUPIED;
+      }
     }
   }
   // ...cierra una parte de la mazmorra
@@ -157,7 +173,13 @@ export const checkOptionPosition = (board, x, y, tile, touched) => {
         const cell = row[j];
         if ((i === 0 && j === 0) || cell === ELEMENTS.WALL.img) continue;
         easystar.findPath(0, 0, j, i, function (path) {
-          if (path === null) permitted = false;
+          if (path === null) {
+            permitted = false;
+            error_text =
+              j === BOARD_WIDTH - 1 && i === BOARD_HEIGHT - 1
+                ? en.ERROR_NO_WAY_OUT
+                : en.ERROR_ISOLATED_CELLS;
+          }
         });
         easystar.enableSync();
         easystar.calculate();
@@ -183,7 +205,7 @@ export const checkOptionPosition = (board, x, y, tile, touched) => {
       }
     }
   }
-  return checkBoard;
+  return { checkBoard, error_text, permitted };
 };
 
 export const setOptionOnBoard = (board, x, y, tile, checkBoard) => {
