@@ -153,7 +153,7 @@ export const checkOptionPosition = (board, x, y, tile, touched) => {
         newX >= 0 &&
         newY >= 0
       ) {
-        if (permitted) boardWithTile[newY][newX] = ELEMENTS.WALL.img;
+        if (permitted) boardWithTile[newY][newX] = tile[i][j];
       }
     }
   }

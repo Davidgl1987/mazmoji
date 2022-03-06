@@ -27,27 +27,17 @@ h3, h5 {
 }
 
 .App main {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  align-items: center;
-  justify-content: space-evenly;
-  max-width: 900px;
   margin: auto;
-}
-
-.ui {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  /* height: 30%; */
-  flex: 1;
 }
 
 .random-elements {
   text-align: center;
   margin: auto;
+  width: 30vw;
+  height: 30vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .random-elements .container {
   display: flex;
@@ -118,13 +108,15 @@ h3, h5 {
 
 .messages {
   display: flex;
+  justify-content: space-between;
 }
 .messages div {
-  margin: 1em;
+  margin: 0.5em;
 }
 .messages .text {
   border: 1px solid burlywood;
   border-radius: 0.3rem;
+  flex: 1;
 }
 .messages .turns {
   border: 1px solid green;
@@ -132,23 +124,14 @@ h3, h5 {
 }
 
 @media (orientation: landscape) { 
-  .App main {
-    flex-direction: row;
-  }
   .ui {
-    flex-direction: column;
-    align-items: center;
-    width: auto;
-    justify-content: space-around;
+    display: flex;
   }
   .levels .container {
     display: flex;
     flex-direction: column;
-  }
-}
-
-@media (min-width: 700px) {
-  .ui {
-    height: 350px;
+  } 
+  .random-elements {
+    height: auto;
   }
 }
