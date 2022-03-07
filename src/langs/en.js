@@ -9,4 +9,7 @@ export const en = {
   ERROR_CELL_OCCUPIED: "Cell already occupied",
   ERROR_NO_WAY_OUT: "No way out!",
   ERROR_ISOLATED_CELLS: "Can't isolate cells",
+  DUNGEON_CREATED: "Dungeon created!",
+  SHARE_YOUR_DUNGEON: "Lock a friend in the dungeon and see if he can beat it!",
+  SHARE_ON: "Share on...",
 };

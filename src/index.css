@@ -47,6 +47,7 @@ h3, h5 {
 }
 
 .board-container table {
+  margin: auto;
   border-collapse: collapse;
   border: 2px solid;
 }
@@ -86,6 +87,7 @@ h3, h5 {
 }
 .levels .container {
   display: flex;
+  justify-content: center;
 }
 .levels .container .square {
   margin: 0.5em;
@@ -134,4 +136,63 @@ h3, h5 {
   .random-elements {
     height: auto;
   }
+}
+
+.modal {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: all 0.2s ease-in-out;
+  pointer-events: none;
+}
+
+.modal.show {
+  opacity: 1;
+  pointer-events: visible;
+}
+
+.modal-content {
+  max-width: 500px;
+  background-color: white;
+  border-radius: 0.3em;
+  margin: 1em;
+  transform: translateY(-200px);
+  transition: all 0.2s ease-in-out;
+}
+.modal.show .modal-content {
+  transform: translateY(0);
+}
+
+.modal-header, .modal-footer {
+  padding: 1em;
+  text-align: center;
+}
+
+.modal-title {
+  margin: 0;
+}
+
+.modal-body {
+  padding: 1em;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+}
+
+.share-board {
+  white-space: pre-line;
+  text-align: center;
+}
+
+.twitter-color {
+  color: rgb(29, 155, 240);
+}
+.twitter-bg {
+  background: rgb(29, 155, 240);
 }

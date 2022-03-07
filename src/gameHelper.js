@@ -11,7 +11,7 @@ export const createBoard = () => {
   return Array.from(Array(BOARD_HEIGHT), () => Array(BOARD_WIDTH).fill(null));
 };
 
-export const MAX_TURNS = 20;
+export const MAX_TURNS = 10;
 
 export const ELEMENTS = {
   WALL: { img: "🟫", probability: 2 },
@@ -19,9 +19,11 @@ export const ELEMENTS = {
   SNAKE: { img: "🐍", probability: 0.4 },
   CTHULHU: { img: "🦑", probability: 0.2 },
   DIAMOND: { img: "💎", probability: 0.2 },
-  TRAP: { img: "♨️", probability: 0.4 },
+  TRAP: { img: "🔥", probability: 0.4 },
   LEVEL: { img: "⬆️", probability: 0.2 },
 };
+
+export const NULL_ELEMENT = "⬜";
 
 export const getRandomOption = () => {
   const totalProbability = Object.keys(ELEMENTS).reduce(
@@ -228,4 +230,17 @@ export const setOptionOnBoard = (board, x, y, tile, checkBoard) => {
     }
   }
   return board;
+};
+
+export const getShareBoard = (board) => {
+  let sharedBoard = "";
+  for (let i = 0; i < board.length; i++) {
+    const row = board[i];
+    for (let j = 0; j < row.length; j++) {
+      const cell = row[j];
+      sharedBoard += cell === null ? "⬜" : cell;
+    }
+    sharedBoard += "\n";
+  }
+  return sharedBoard;
 };

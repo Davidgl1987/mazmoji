@@ -1,4 +1,5 @@
 import Game from "./components/Game";
+import { GameContextProvider } from "./context/GameContext";
 
 const App = () => {
   return (
@@ -7,7 +8,9 @@ const App = () => {
         <h3>Mazmoji</h3>
       </header>
       <main>
-        <Game />
+        <GameContextProvider>
+          <Game />
+        </GameContextProvider>
       </main>
     </div>
   );
