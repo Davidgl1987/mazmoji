@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/mazmoji/static/css/main.999a834c.css",
-    "main.js": "/mazmoji/static/js/main.fb81d0e1.js",
+    "main.css": "/mazmoji/static/css/main.682ebc7a.css",
+    "main.js": "/mazmoji/static/js/main.915d1018.js",
     "index.html": "/mazmoji/index.html",
-    "main.999a834c.css.map": "/mazmoji/static/css/main.999a834c.css.map",
-    "main.fb81d0e1.js.map": "/mazmoji/static/js/main.fb81d0e1.js.map"
+    "main.682ebc7a.css.map": "/mazmoji/static/css/main.682ebc7a.css.map",
+    "main.915d1018.js.map": "/mazmoji/static/js/main.915d1018.js.map"
   },
   "entrypoints": [
-    "static/css/main.999a834c.css",
-    "static/js/main.fb81d0e1.js"
+    "static/css/main.682ebc7a.css",
+    "static/js/main.915d1018.js"
   ]
 }
