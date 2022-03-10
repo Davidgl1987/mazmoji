@@ -12,4 +12,6 @@ export const en = {
   DUNGEON_CREATED: "Dungeon created!",
   SHARE_YOUR_DUNGEON: "Lock a friend in the dungeon and see if he can beat it!",
   SHARE_ON: "Share on...",
+  SHARE_TEXT:
+    "I just did this dungeon and I'm not letting you out. Can you escape?",
 };

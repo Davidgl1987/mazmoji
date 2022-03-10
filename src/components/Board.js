@@ -6,7 +6,7 @@ import { BOARD_WIDTH } from "../gameHelper";
 
 const Board = () => {
   const { state, dispatch } = useGameContext();
-  const { board: matrix, checkBoard } = state;
+  const { board, checkBoard } = state;
 
   const checkOptionPosition = (dragData, x, y) => {
     const { tiles, touched } = dragData;
@@ -42,7 +42,7 @@ const Board = () => {
       </table>
       <table>
         <tbody>
-          {matrix.map((row, y) => (
+          {board.map((row, y) => (
             <tr key={y}>
               {row.map((cell, x) => (
                 <td key={x} className={checkBoard[y][x]}>

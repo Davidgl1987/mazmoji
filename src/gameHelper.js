@@ -1,4 +1,7 @@
+import packageJson from "../package.json";
 import EasyStar from "easystarjs";
+import md5 from "md5";
+
 import { en } from "./langs/en";
 
 export const BOARD_HEIGHT = 6;
@@ -243,4 +246,9 @@ export const getShareBoard = (board) => {
     sharedBoard += "\n";
   }
   return sharedBoard;
+};
+
+export const getSharedLink = (shareBoard) => {
+  const { homepage } = packageJson;
+  return homepage + md5(shareBoard);
 };
