@@ -1,25 +1,25 @@
 import Element from "./Element";
-import { isWall } from "../gameHelper";
 import { useGameContext } from "../context/GameContext";
 import { ACTIONS } from "../reducers/GameReducer";
 
 const RandomElements = () => {
   const { state, dispatch } = useGameContext();
-  const { randomOption } = state;
-  const rotateOption = () => {
+  const { randomOption, randomWall } = state;
+  const rotateWall = () => {
     dispatch({
-      type: ACTIONS.ROTATE_OPTION,
+      type: ACTIONS.ROTATE_WALL,
     });
   };
 
   return (
     <div className="random-elements">
-      <div className="container">
-        {isWall(randomOption) && (
-          <div style={{ margin: "1em" }}>
-            <button onClick={() => rotateOption()}>Rotate 🔄</button>
-          </div>
-        )}
+      <div>
+        <div style={{ margin: "1em" }}>
+          <button onClick={rotateWall}>Rotate 🔄</button>
+        </div>
+        <Element tiles={randomWall} />
+      </div>
+      <div>
         <Element tiles={randomOption} />
       </div>
     </div>

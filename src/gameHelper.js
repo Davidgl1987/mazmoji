@@ -17,32 +17,34 @@ export const createBoard = () => {
 export const MAX_TURNS = 10;
 
 export const ELEMENTS = {
-  WALL: { img: "🟫", probability: 2 },
-  SPIDER: { img: "🕷️", probability: 0.6 },
+  WALL: { img: "🟫" },
+  SPIDER: { img: "🕷️", probability: 0.5 },
   SNAKE: { img: "🐍", probability: 0.4 },
   CTHULHU: { img: "🦑", probability: 0.2 },
   DIAMOND: { img: "💎", probability: 0.2 },
   TRAP: { img: "🔥", probability: 0.4 },
-  LEVEL: { img: "⬆️", probability: 0.2 },
 };
 
 export const NULL_ELEMENT = "⬜";
 
+export const getRandomWall = () => {
+  return WALL_GROUPS[Math.floor(Math.random() * WALL_GROUPS.length)];
+};
+
 export const getRandomOption = () => {
-  const totalProbability = Object.keys(ELEMENTS).reduce(
+  const options = Object.keys(ELEMENTS);
+  options.splice(options.indexOf("WALL"), 1);
+  const totalProbability = options.reduce(
     (prev, curr) => prev + ELEMENTS[curr].probability,
     0
   );
   const randomProbability = Math.random() * totalProbability;
   let sumProbability = 0;
-  for (let i = 0; i < Object.keys(ELEMENTS).length; i++) {
-    const keyElement = Object.keys(ELEMENTS)[i];
+  for (let i = 0; i < options.length; i++) {
+    const keyElement = options[i];
     const element = ELEMENTS[keyElement];
     sumProbability += element.probability;
     if (randomProbability <= sumProbability) {
-      if (element.img === ELEMENTS.WALL.img) {
-        return WALL_GROUPS[Math.floor(Math.random() * WALL_GROUPS.length)];
-      }
       return [[element.img]];
     }
   }

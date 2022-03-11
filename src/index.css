@@ -33,17 +33,11 @@ h3, h5 {
 .random-elements {
   text-align: center;
   margin: auto;
-  width: 30vw;
-  height: 30vh;
+  min-width: 30vw;
+  min-height: 30vh;
   display: flex;
   align-items: center;
-  justify-content: center;
-}
-.random-elements .container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+  justify-content: space-around;
 }
 
 .board-container table {
@@ -82,22 +76,16 @@ h3, h5 {
   background-color: transparent;
 }
 
-.levels {
-  margin: 1em;
-}
-.levels .container {
-  display: flex;
-  justify-content: center;
-}
-.levels .container .square {
-  margin: 0.5em;
-}
-
 .square {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100%;
+}
+
+.square.🟫 {
+  font-size: 0;
+  background: saddlebrown;
 }
 
 .forbidden {
@@ -120,21 +108,27 @@ h3, h5 {
   border-radius: 0.3rem;
   flex: 1;
 }
-.messages .turns {
+
+.turns {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.turns h5 {
   border: 1px solid green;
   border-radius: 2em;
+  padding: 1em;
 }
 
 @media (orientation: landscape) { 
   .ui {
     display: flex;
   }
-  .levels .container {
-    display: flex;
-    flex-direction: column;
-  } 
   .random-elements {
     height: auto;
+  }
+  .turns {
+    margin: 1em;
   }
 }
 
@@ -188,6 +182,7 @@ h3, h5 {
 .share-board {
   white-space: pre-line;
   text-align: center;
+  font-size: x-large;
 }
 
 .twitter-color {

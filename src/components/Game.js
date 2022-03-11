@@ -2,7 +2,6 @@ import { useGameContext } from "../context/GameContext";
 import { getShareBoard, MAX_TURNS } from "../gameHelper";
 import { en } from "../langs/en";
 import Board from "./Board";
-import Levels from "./Levels";
 import { Messages } from "./Messages";
 import { Modal } from "./Modal";
 import RandomElements from "./RandomElements";
@@ -18,7 +17,9 @@ const Game = () => {
       <div className="ui">
         <RandomElements />
         <Board />
-        <Levels />
+        <div className="turns">
+          <h5>{MAX_TURNS - turns} ⏳</h5>
+        </div>
       </div>
       <Modal
         show={turns >= MAX_TURNS}

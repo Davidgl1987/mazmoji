@@ -1,6 +1,7 @@
 import {
   checkOptionPosition,
   createBoard,
+  getRandomWall,
   getRandomOption,
   PERMITTED_CLASS,
   rotateMatrix,
@@ -12,6 +13,7 @@ export const initialGameState = {
   player: "",
   board: createBoard(),
   checkBoard: createBoard(),
+  randomWall: getRandomWall(),
   randomOption: getRandomOption(),
   selectedOption: null,
   turns: 0,
@@ -19,18 +21,11 @@ export const initialGameState = {
     text: en.DRAG_PIECE,
     class: "",
   },
-  levels: {
-    SPIDER: 1,
-    SNAKE: 1,
-    CTHULHU: 1,
-    TRAP: 1,
-    DIAMOND: 1,
-  },
 };
 
 export const ACTIONS = {
   GENERATE_OPTIONS: "GENERATE_OPTIONS",
-  ROTATE_OPTION: "ROTATE_OPTION",
+  ROTATE_WALL: "ROTATE_WALL",
   CLEAR_CHECK_OPTION: "CLEAR_CHECK_OPTION",
   CHECK_OPTION_POSITION: "CHECK_OPTION_POSITION",
   SET_OPTION_ON_BOARD: "SET_OPTION_ON_BOARD",
@@ -41,11 +36,15 @@ export const GameReducer = (state, action) => {
   const { value } = action;
   switch (action.type) {
     case ACTIONS.GENERATE_OPTIONS:
-      return { ...state, randomOption: getRandomOption() };
-    case ACTIONS.ROTATE_OPTION:
-      let randOpt = [...state.randomOption];
-      randOpt = rotateMatrix(randOpt);
-      return { ...state, randomOption: randOpt };
+      return {
+        ...state,
+        randomOption: getRandomOption(),
+        randomWall: getRandomWall(),
+      };
+    case ACTIONS.ROTATE_WALL:
+      let randWall = [...state.randomWall];
+      randWall = rotateMatrix(randWall);
+      return { ...state, randomWall: randWall };
     case ACTIONS.CLEAR_CHECK_OPTION:
       return { ...state, checkBoard: createBoard() };
     case ACTIONS.CHECK_OPTION_POSITION:
@@ -76,6 +75,7 @@ export const GameReducer = (state, action) => {
           value.tiles,
           state.checkBoard
         ),
+        randomWall: permitted ? getRandomWall() : state.randomWall,
         randomOption: permitted ? getRandomOption() : state.randomOption,
         turns: permitted ? state.turns + 1 : state.turns,
         message: {
