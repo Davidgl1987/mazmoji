@@ -1,6 +1,4 @@
-import packageJson from "../package.json";
 import EasyStar from "easystarjs";
-import md5 from "md5";
 
 import { en } from "./langs/en";
 
@@ -179,17 +177,19 @@ export const checkOptionPosition = (board, x, y, tile, touched) => {
       for (let j = 0; j < row.length; j++) {
         const cell = row[j];
         if ((i === 0 && j === 0) || cell === ELEMENTS.WALL.img) continue;
-        easystar.findPath(0, 0, j, i, function (path) {
-          if (path === null) {
-            permitted = false;
-            error_text =
-              j === BOARD_WIDTH - 1 && i === BOARD_HEIGHT - 1
-                ? en.ERROR_NO_WAY_OUT
-                : en.ERROR_ISOLATED_CELLS;
-          }
+        let path = null;
+        easystar.findPath(0, 0, j, i, function (resultPath) {
+          path = resultPath;
         });
         easystar.enableSync();
         easystar.calculate();
+        if (path === null) {
+          permitted = false;
+          error_text =
+            j === BOARD_WIDTH - 1 && i === BOARD_HEIGHT - 1
+              ? en.ERROR_NO_WAY_OUT
+              : en.ERROR_ISOLATED_CELLS;
+        }
         if (!permitted) break;
       }
       if (!permitted) break;
@@ -251,6 +251,28 @@ export const getShareBoard = (board) => {
 };
 
 export const getSharedLink = (shareBoard) => {
-  const { homepage } = packageJson;
-  return homepage + md5(shareBoard);
+  let homepage = window.location.href;
+  return homepage + "/" + encryptBoard(shareBoard);
+};
+
+export const encryptBoard = (shareBoard) => {
+  let letterBoard = shareBoard;
+  for (let i = 0; i < Object.keys(ELEMENTS).length; i++) {
+    const key = Object.keys(ELEMENTS)[i];
+    const { img } = ELEMENTS[key];
+    letterBoard = letterBoard.replaceAll(img, key.substring(0, 2));
+  }
+  letterBoard = letterBoard.replaceAll(NULL_ELEMENT, "NULL".substring(0, 2));
+  return btoa(letterBoard);
+};
+
+export const decryptBoard = (encryptedBoard) => {
+  let shareBoard = atob(encryptedBoard);
+  for (let i = 0; i < Object.keys(ELEMENTS).length; i++) {
+    const key = Object.keys(ELEMENTS)[i];
+    const { img } = ELEMENTS[key];
+    shareBoard = shareBoard.replaceAll(key.substring(0, 2), img);
+  }
+  shareBoard = shareBoard.replaceAll("NULL".substring(0, 2), NULL_ELEMENT);
+  return shareBoard;
 };

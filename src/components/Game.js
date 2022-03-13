@@ -1,5 +1,5 @@
 import { useGameContext } from "../context/GameContext";
-import { getShareBoard, MAX_TURNS } from "../gameHelper";
+import { getShareBoard, getSharedLink, MAX_TURNS } from "../gameHelper";
 import { en } from "../langs/en";
 import Board from "./Board";
 import { Messages } from "./Messages";
@@ -11,6 +11,9 @@ const Game = () => {
   const { state } = useGameContext();
   const { turns, board } = state;
   const shareBoard = getShareBoard(board);
+  const play = () => {
+    window.history.pushState(null, null, getSharedLink(shareBoard));
+  };
   return (
     <>
       <Messages />
@@ -29,6 +32,10 @@ const Game = () => {
       >
         <p>{en.SHARE_YOUR_DUNGEON}</p>
         <p className="share-board">{shareBoard}</p>
+        <div style={{ textAlign: "center" }}>
+          <p>{en.OR_PLAY_YOUR_DUNGEON}</p>
+          <button onClick={play}>▶️</button>
+        </div>
       </Modal>
     </>
   );

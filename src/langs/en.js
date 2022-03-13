@@ -14,4 +14,5 @@ export const en = {
   SHARE_ON: "Share on...",
   SHARE_TEXT:
     "I just did this dungeon and I'm not letting you out. Can you escape?",
+  OR_PLAY_YOUR_DUNGEON: "Or play your dungeon",
 };
