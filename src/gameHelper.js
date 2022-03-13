@@ -18,7 +18,7 @@ export const ELEMENTS = {
   WALL: { img: "🟫" },
   SPIDER: { img: "🕷️", probability: 0.5 },
   SNAKE: { img: "🐍", probability: 0.4 },
-  CTHULHU: { img: "🦑", probability: 0.2 },
+  CTHULHU: { img: "🐙", probability: 0.2 },
   DIAMOND: { img: "💎", probability: 0.2 },
   TRAP: { img: "🔥", probability: 0.4 },
 };

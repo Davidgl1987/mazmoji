@@ -1,33 +1,29 @@
-import { useEffect, useState } from "react";
-import Game from "./components/Game";
+import Game from "./pages/Game";
 import { GameContextProvider } from "./context/GameContext";
-import { decryptBoard } from "./gameHelper";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Play } from "./pages/Play";
 
 const App = () => {
-  const [dungeon, setDungeon] = useState(null);
-
-  useEffect(() => {
-    setDungeon(window.location.pathname.split("/mazmoji/")[1]);
-  }, []);
-
   return (
     <div className="App">
       <header>
         <h3>Mazmoji</h3>
       </header>
       <main>
-        {!dungeon && (
-          <GameContextProvider>
-            <Game />
-          </GameContextProvider>
-        )}
-        {dungeon && (
-          <div>
-            {dungeon}
-            <br />
-            {decryptBoard(dungeon)}
-          </div>
-        )}
+        <BrowserRouter>
+          <Routes>
+            <Route
+              path="mazmoji"
+              element={
+                <GameContextProvider>
+                  <Game />
+                </GameContextProvider>
+              }
+            />
+            <Route path="mazmoji/:encDungeon" element={<Play />} />
+            <Route path="*" element={<div>NO HAY PAGINA</div>} />
+          </Routes>
+        </BrowserRouter>
       </main>
     </div>
   );
