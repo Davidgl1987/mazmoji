@@ -1,13 +1,9 @@
 import Square from "./Square";
 import { DropTarget } from "react-drag-drop-container";
-import { useGameContext } from "../context/GameContext";
 import { ACTIONS } from "../reducers/GameReducer";
 import { BOARD_WIDTH } from "../gameHelper";
 
-const Board = () => {
-  const { state, dispatch } = useGameContext();
-  const { board, checkBoard } = state;
-
+const Board = ({ board, checkBoard, dispatch, onlyView = false }) => {
   const checkOptionPosition = (dragData, x, y) => {
     const { tiles, touched } = dragData;
     dispatch({
@@ -45,20 +41,23 @@ const Board = () => {
           {board.map((row, y) => (
             <tr key={y}>
               {row.map((cell, x) => (
-                <td key={x} className={checkBoard[y][x]}>
-                  <DropTarget
-                    style={{ background: "grey" }}
-                    targetKey="square"
-                    onDragEnter={({ dragData }) =>
-                      checkOptionPosition(dragData, x, y)
-                    }
-                    onDragLeave={({ dragData }) => clearCheckOption()}
-                    onHit={({ dragData }) =>
-                      setOptionOnBoard(dragData.tiles, x, y)
-                    }
-                  >
-                    <Square content={cell} />
-                  </DropTarget>
+                <td key={x} className={!onlyView ? checkBoard[y][x] : ""}>
+                  {onlyView && <Square content={cell} />}
+                  {!onlyView && (
+                    <DropTarget
+                      style={{ background: "grey" }}
+                      targetKey="square"
+                      onDragEnter={({ dragData }) =>
+                        checkOptionPosition(dragData, x, y)
+                      }
+                      onDragLeave={({ dragData }) => clearCheckOption()}
+                      onHit={({ dragData }) =>
+                        setOptionOnBoard(dragData.tiles, x, y)
+                      }
+                    >
+                      <Square content={cell} />
+                    </DropTarget>
+                  )}
                 </td>
               ))}
             </tr>

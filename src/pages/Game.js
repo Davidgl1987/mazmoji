@@ -9,15 +9,15 @@ import RandomElements from "../components/RandomElements";
 import { ShareMethods } from "../components/ShareMethods";
 
 const Game = () => {
-  const { state } = useGameContext();
-  const { turns, board } = state;
+  const { state, dispatch } = useGameContext();
+  const { turns, board, checkBoard } = state;
   const shareBoard = getShareBoard(board);
   return (
     <>
       <Messages />
       <div className="ui">
         <RandomElements />
-        <Board />
+        <Board board={board} checkBoard={checkBoard} dispatch={dispatch} />
         <div className="turns">
           <h5>
             {MAX_TURNS - turns} <span className="emoji">⏳</span>

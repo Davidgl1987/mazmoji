@@ -268,11 +268,21 @@ export const encryptBoard = (shareBoard) => {
 
 export const decryptBoard = (encryptedBoard) => {
   let shareBoard = atob(encryptedBoard);
-  for (let i = 0; i < Object.keys(ELEMENTS).length; i++) {
-    const key = Object.keys(ELEMENTS)[i];
-    const { img } = ELEMENTS[key];
-    shareBoard = shareBoard.replaceAll(key.substring(0, 2), img);
+  let board = [];
+  let rows = shareBoard.split("\n");
+  for (let i = 0; i < rows.length; i++) {
+    let row = [];
+    for (let j = 0; j < rows[i].length; j += 2) {
+      let cell = rows[i].substring(j, j + 2);
+      for (let e = 0; e < Object.keys(ELEMENTS).length; e++) {
+        const key = Object.keys(ELEMENTS)[e];
+        const { img } = ELEMENTS[key];
+        cell = cell.replace(key.substring(0, 2), img);
+      }
+      if (cell === "NULL".substring(0, 2)) row.push(null);
+      else row.push(cell.slice());
+    }
+    board.push([...row]);
   }
-  shareBoard = shareBoard.replaceAll("NULL".substring(0, 2), NULL_ELEMENT);
-  return shareBoard;
+  return board;
 };

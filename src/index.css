@@ -60,6 +60,10 @@ h3, h5 {
   padding: 0px;
   border: 1px solid;
 }
+.board-container table td span.droptarget {
+  display: flex;
+  height: 100%;
+}
 .board-container .entrada-salida,
 .board-container .entrada-salida td {
   border-color: transparent;
@@ -88,9 +92,11 @@ h3, h5 {
 .square {
   font-family: NotoColorEmoji;
   display: flex;
+  flex: 1;
   justify-content: center;
   align-items: center;
   height: 100%;
+  font-size: x-large;
 }
 
 .square.🟫 {
@@ -123,11 +129,12 @@ h3, h5 {
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: x-large;
 }
 .turns h5 {
-  border: 1px solid green;
+  border: 2px solid green;
   border-radius: 2em;
-  padding: 1em;
+  padding: 0.5em;
 }
 
 @media (orientation: landscape) { 
