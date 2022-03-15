@@ -17,7 +17,12 @@ const Game = () => {
       <Messages />
       <div className="ui">
         <RandomElements />
-        <Board board={board} checkBoard={checkBoard} dispatch={dispatch} />
+        <Board
+          board={board}
+          checkBoard={checkBoard}
+          dispatch={dispatch}
+          mode={"create"}
+        />
         <div className="turns">
           <h5>
             {MAX_TURNS - turns} <span className="emoji">⏳</span>

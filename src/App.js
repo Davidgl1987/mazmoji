@@ -1,6 +1,6 @@
 import Game from "./pages/Game";
 import { GameContextProvider } from "./context/GameContext";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { Play } from "./pages/Play";
 
 const App = () => {
@@ -21,7 +21,7 @@ const App = () => {
               }
             />
             <Route path="mazmoji/:encDungeon" element={<Play />} />
-            <Route path="*" element={<div>NO HAY PAGINA</div>} />
+            <Route path="*" element={<Navigate to="mazmoji" />} />
           </Routes>
         </BrowserRouter>
       </main>

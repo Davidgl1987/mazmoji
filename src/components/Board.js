@@ -3,7 +3,7 @@ import { DropTarget } from "react-drag-drop-container";
 import { ACTIONS } from "../reducers/GameReducer";
 import { BOARD_WIDTH } from "../gameHelper";
 
-const Board = ({ board, checkBoard, dispatch, onlyView = false }) => {
+const Board = ({ board, checkBoard, dispatch, mode = "create" }) => {
   const checkOptionPosition = (dragData, x, y) => {
     const { tiles, touched } = dragData;
     dispatch({
@@ -41,9 +41,12 @@ const Board = ({ board, checkBoard, dispatch, onlyView = false }) => {
           {board.map((row, y) => (
             <tr key={y}>
               {row.map((cell, x) => (
-                <td key={x} className={!onlyView ? checkBoard[y][x] : ""}>
-                  {onlyView && <Square content={cell} />}
-                  {!onlyView && (
+                <td
+                  key={x}
+                  className={mode === "create" ? checkBoard[y][x] : ""}
+                >
+                  {mode === "play" && <Square content={cell} />}
+                  {mode === "create" && (
                     <DropTarget
                       style={{ background: "grey" }}
                       targetKey="square"
