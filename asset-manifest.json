@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/mazmoji/static/css/main.8abd6986.css",
-    "main.js": "/mazmoji/static/js/main.4e61b9ed.js",
+    "main.js": "/mazmoji/static/js/main.338bb27b.js",
     "static/media/NotoColorEmoji.ttf": "/mazmoji/static/media/NotoColorEmoji.1d9b9dcd6c97b1912dad.ttf",
     "index.html": "/mazmoji/index.html",
     "main.8abd6986.css.map": "/mazmoji/static/css/main.8abd6986.css.map",
-    "main.4e61b9ed.js.map": "/mazmoji/static/js/main.4e61b9ed.js.map"
+    "main.338bb27b.js.map": "/mazmoji/static/js/main.338bb27b.js.map"
   },
   "entrypoints": [
     "static/css/main.8abd6986.css",
-    "static/js/main.4e61b9ed.js"
+    "static/js/main.338bb27b.js"
   ]
 }
