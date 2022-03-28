@@ -7,7 +7,7 @@ const Element = ({ tiles }) => {
   const [touched, setTouched] = useState(null);
   if (isWall(tiles)) {
     return (
-      <DragDropContainer targetKey="square" dragData={{ tiles, touched }}>
+      <DragDropContainer dragData={{ tiles, touched }}>
         <table className="elements">
           <tbody>
             {tiles.map((row, r) => (
@@ -39,10 +39,7 @@ const Element = ({ tiles }) => {
                   key={r + "_" + c}
                   onPointerDown={({ target }) => setTouched({ x: c, y: r })}
                 >
-                  <DragDropContainer
-                    targetKey="square"
-                    dragData={{ tiles, touched }}
-                  >
+                  <DragDropContainer dragData={{ tiles, touched }}>
                     <div className={"element-col " + col}>
                       <Square content={col} />
                     </div>

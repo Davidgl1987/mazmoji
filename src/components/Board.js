@@ -49,7 +49,6 @@ const Board = ({ board, checkBoard, dispatch, mode = "create" }) => {
                   {mode === "create" && (
                     <DropTarget
                       style={{ background: "grey" }}
-                      targetKey="square"
                       onDragEnter={({ dragData }) =>
                         checkOptionPosition(dragData, x, y)
                       }
